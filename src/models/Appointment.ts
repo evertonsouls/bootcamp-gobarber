@@ -3,6 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
@@ -27,7 +28,7 @@ class Appointment {
   @CreateDateColumn()
   created_at: Date;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   updated_at: Date;
 }
 
