@@ -14,10 +14,10 @@ class FakeAppointmentsRepository implements IAppointmentsRepository {
       isEqual(appointment.date, date),
     );
 
-    return Promise.resolve(findAppointment);
+    return findAppointment;
   }
 
-  public create({
+  public async create({
     provider_id,
     date,
   }: ICreateAppointmentDTO): Promise<Appointment> {
@@ -27,15 +27,15 @@ class FakeAppointmentsRepository implements IAppointmentsRepository {
 
     this.appointments.push(appointment);
 
-    return Promise.resolve(appointment);
+    return appointment;
   }
 
-  public save(appointment: Appointment): Promise<Appointment> {
+  public async save(appointment: Appointment): Promise<Appointment> {
     this.appointments = this.appointments.map(item =>
       item.id === appointment.id ? appointment : item,
     );
 
-    return Promise.resolve(appointment);
+    return appointment;
   }
 }
 
