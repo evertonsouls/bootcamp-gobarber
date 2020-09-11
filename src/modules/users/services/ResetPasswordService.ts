@@ -41,12 +41,12 @@ class ResetPasswordService {
     const compareDate = addHours(tokenCreatedAt, 2);
 
     if (isAfter(Date.now(), compareDate)) {
-      throw new AppError('Token expired');
+      throw new AppError('Token expired!');
     }
 
     user.password = await this.hashProvider.generateHash(password);
 
-    this.usersRepository.save(user);
+    await this.usersRepository.save(user);
   }
 }
 
