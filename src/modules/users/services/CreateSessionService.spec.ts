@@ -4,17 +4,21 @@ import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import CreateSessionService from './CreateSessionService';
 import CreateUserService from './CreateUserService';
 
+let fakeRepository: FakeUsersRepository;
+let fakeHashProvider: FakeHashProvider;
+let createSession: CreateSessionService;
+let createUser: CreateUserService;
+
 describe('CreateSession', () => {
+  beforeEach(() => {
+    fakeRepository = new FakeUsersRepository();
+    fakeHashProvider = new FakeHashProvider();
+
+    createSession = new CreateSessionService(fakeRepository, fakeHashProvider);
+    createUser = new CreateUserService(fakeRepository, fakeHashProvider);
+  });
+
   it('should be able to authenticate', async () => {
-    const fakeRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
-    const createSession = new CreateSessionService(
-      fakeRepository,
-      fakeHashProvider,
-    );
-    const createUser = new CreateUserService(fakeRepository, fakeHashProvider);
-
     const user = await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -31,14 +35,6 @@ describe('CreateSession', () => {
   });
 
   it('should not be able to authenticate with non existing user', async () => {
-    const fakeRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
-    const createSession = new CreateSessionService(
-      fakeRepository,
-      fakeHashProvider,
-    );
-
     await expect(
       createSession.execute({
         email: 'johndoe@example.com',
@@ -48,15 +44,6 @@ describe('CreateSession', () => {
   });
 
   it('should not be able to authenticate with wrong password', async () => {
-    const fakeRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
-    const createSession = new CreateSessionService(
-      fakeRepository,
-      fakeHashProvider,
-    );
-    const createUser = new CreateUserService(fakeRepository, fakeHashProvider);
-
     await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
