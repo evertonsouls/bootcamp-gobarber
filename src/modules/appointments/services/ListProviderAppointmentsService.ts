@@ -11,14 +11,14 @@ interface IRequest {
   year: number;
 }
 @injectable()
-class ListProviderMonthAvailabilityService {
+class ListProviderAppointmentsService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
 
     @inject('CacheProvider')
     private cacheProvider: ICacheProvider,
-  ) { }
+  ) {}
 
   public async execute({
     provider_id,
@@ -26,10 +26,10 @@ class ListProviderMonthAvailabilityService {
     month,
     year,
   }: IRequest): Promise<Appointment[]> {
-    const cachedKey = `providers-available-list-month:${provider_id}-${day}-${month}-${year}`;
+    const cacheKey = `providers-appointments:${provider_id}:${year}-${month}-${day}`;
 
     let appointments = await this.cacheProvider.recover<Appointment[]>(
-      cachedKey,
+      cacheKey,
     );
 
     if (appointments) {
@@ -43,10 +43,10 @@ class ListProviderMonthAvailabilityService {
       year,
     });
 
-    await this.cacheProvider.save(cachedKey, appointments);
+    await this.cacheProvider.save(cacheKey, appointments);
 
     return appointments;
   }
 }
 
-export default ListProviderMonthAvailabilityService;
+export default ListProviderAppointmentsService;

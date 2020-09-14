@@ -12,8 +12,8 @@ export default {
   driver: process.env.MAIL_DRIVER || 'ethereal',
   defaults: {
     from: {
-      email: 'everton@evertonps.com',
-      name: 'Everton Pereira',
+      email: 'noreaply@gobarber.com.br',
+      name: 'Equipe GoBarber',
     },
   },
 } as IMailConfig;
