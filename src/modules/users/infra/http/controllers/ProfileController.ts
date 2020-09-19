@@ -15,7 +15,7 @@ class ProfileController {
       user_id,
     });
 
-    return response.json({ user: classToClass(user) });
+    return response.json(classToClass(user));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -32,7 +32,7 @@ class ProfileController {
       password,
     });
 
-    return response.json({ user: classToClass(user) });
+    return response.json(classToClass(user));
   }
 }
 
